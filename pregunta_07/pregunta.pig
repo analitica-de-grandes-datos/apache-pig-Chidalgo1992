@@ -14,3 +14,7 @@ $ pig -x local -f pregunta.pig
 
         >>> Escriba su respuesta a partir de este punto <<<
 */
+Texto = LOAD 'data.tsv' using PigStorage('\t') AS (B1:chararray,B2:bag{},B3:[]);
+Cantidad = FOREACH Texto GENERATE B1, COUNT(B2) as B2, SIZE(B3) as B3;
+Orden = ORDER Cantidad by B1,B2,B3;
+STORE Orden INTO './output' USING PigStorage(',');
