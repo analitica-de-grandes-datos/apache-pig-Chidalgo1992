@@ -20,7 +20,7 @@ expected = [
 if os.path.isdir("output"):
     os.system("rm -rf output")
 
-os.system("sdocker run -v $PWD:/workspace jdvelasq/pig:classroom")
+os.system("docker run -v $PWD:/workspace jdvelasq/pig:classroom")
 
 assert os.path.isdir("output") is True
 
