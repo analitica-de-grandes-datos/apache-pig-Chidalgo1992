@@ -17,3 +17,14 @@ $ pig -x local -f pregunta.pig
         >>> Escriba su respuesta a partir de este punto <<<
 */
 
+Texto = LOAD 'data.tsv' using PigStorage('\t') AS (B1:chararray,B2:bag{},B3:[]);
+Valores = FOREACH Texto GENERATE FLATTEN($1), FLATTEN($2);
+Tupla = GROUP Valores BY ($0, $1);
+Conteo = FOREACH Tupla GENERATE group, COUNT(Valores);
+STORE Conteo INTO 'output' USING PigStorage(',');
+Footer
+© 2022 GitHub, Inc.
+Footer navigation
+Terms
+Privacy
+Security

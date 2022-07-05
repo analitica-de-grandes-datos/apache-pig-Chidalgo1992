@@ -12,3 +12,9 @@ $ pig -x local -f pregunta.pig
 
         >>> Escriba su respuesta a partir de este punto <<<
 */
+Texto = LOAD 'data.tsv' using PigStorage('\t') AS (B1:chararray,line:chararray,B3:chararray);
+Tupla = FOREACH Texto GENERATE FLATTEN(TOKENIZE(line)) AS palabra;
+Group1 = GROUP Tupla by palabra;
+counts = FOREACH Group1 GENERATE group,COUNT(Tupla);
+letras = LIMIT counts 7; 
+STORE letras INTO './output' USING PigStorage(',');
